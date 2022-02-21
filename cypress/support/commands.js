@@ -11,7 +11,7 @@
 //
 // -- This is a parent command --
 
-//login Command
+//Login Command
 Cypress.Commands.add('login', (userName, password) => {
 
     //go to the ULR
@@ -24,6 +24,22 @@ Cypress.Commands.add('login', (userName, password) => {
     cy.get('[data-cy="submit__btn"]').click()
 
 })
+
+//Bad Login Command
+Cypress.Commands.add('badLogin', () => {
+
+    
+    //Fill the Username and password information 
+    cy.get('#input-1').type("rosvin.piedra")
+    cy.get('#input-2').type("badpass")
+
+    //Click on the login button   
+    for (let i = 0; i < 1; i++){
+        cy.wait(1000)
+        cy.get('[data-cy="submit__btn"]').click()
+    }
+
+}) 
 
 //Fill Employee Personal Information 
 Cypress.Commands.add('fillEmployeePersonalInfo', (name, lastName, city, streedAddress, state, telephone, zip, mail) => {
