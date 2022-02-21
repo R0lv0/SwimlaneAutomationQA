@@ -30,5 +30,23 @@ describe('Login Feature Test Suite', function()
         cy.get('[data-cy="submit__btn"]').click()
     })
 
+    it('loginFailed',function() {
+
+        //go to the ULR
+        cy.visit('https://qa-practical.qa.swimlane.io/login')
+
+        //Fill the Username and password information 
+        cy.get('#input-1').should('be.visible')
+        cy.get('#input-1').type('badName')
+        cy.get('#input-2').should('be.visible')
+        cy.get('#input-2').type('badPassword')
+        
+        //Click on the login button 
+        cy.wait(1000)
+        cy.get('[data-cy="submit__btn"]').should('be.visible')
+        cy.get('[data-cy="submit__btn"]').click()
+        cy.get('.login-error').should('be.visible')
+    })
+
 
 } )
