@@ -74,6 +74,25 @@ Cypress.Commands.add('deleteRecord', () => {
 
 })
 
+//API get token
+Cypress.Commands.add('getToken' , () => {
+    cy.request({
+        method:'POST', 
+        url: 'https://qa-practical.qa.swimlane.io/api/user/login',
+        body: {
+            username: "rosvin.piedra",
+            password: "sebKAz9A8CRrDTxs"
+        }
+      })
+      .as('loginResponse')
+      .then(response => {
+        Cypress.env('token', response.body.token); // either this or some global var but remember that this will only work in one test case
+      })
+      .its('status')
+      .should('eq', 200);
+  })
+
+
 //
 //
 // -- This is a child command --
