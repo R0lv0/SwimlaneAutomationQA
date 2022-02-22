@@ -46,7 +46,23 @@ describe('Create New Record Feature Test Suite', function()
     
         //Click on Save button 
         cy.get('.nav > :nth-child(1) > div > .save-button').should('be.visible')
-        
+        cy.get('.nav > :nth-child(1) > div > .save-button').click()
+
+        //Validate the modal 
+        cy.get('.modal-body > .form-input').should('be.visible')
+        cy.get('.modal-body > .form-input').type('1m')
+
+        //Click on Save button 
+        cy.get('.modal-footer > .btn').should('be.visible')
+        cy.get('.modal-footer > .btn').click()
+
+        //Validate success message
+        cy.get('.ng-notification').should('be.visible')
+        //cy.get('.ng-notification').contains()
+
+        //Delete the record
+        cy.deleteRecord()
+
         })
 
 } )

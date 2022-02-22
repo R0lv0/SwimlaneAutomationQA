@@ -3,7 +3,7 @@
     "lastName":"Piedra",
     "city": "Heredia",
     "streedAddress":"Test Sample Streed Address",
-    "state":["Heredia","San Jose"],
+    "state":"Heredia",
     "telephone":"(+506) 83490150",
     "zip":"11450",
     "mail":"rosvin.piedra@encora.com"

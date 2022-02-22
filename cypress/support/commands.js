@@ -63,6 +63,17 @@ Cypress.Commands.add('fillEmployeePersonalInfo', (name, lastName, city, streedAd
 
 })
 
+//Delete Record Command
+Cypress.Commands.add('deleteRecord', () => {
+
+    //Delete the record
+    cy.wait(2000)
+    cy.get(':nth-child(4) > .btn').click()
+    cy.wait(2000)
+    cy.get('div button[tabindex="0"]').click()
+
+})
+
 //
 //
 // -- This is a child command --
