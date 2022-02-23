@@ -74,24 +74,19 @@ Cypress.Commands.add('deleteRecord', () => {
 
 })
 
-//API get token
-Cypress.Commands.add('getToken' , () => {
-    cy.request({
-        method:'POST', 
-        url: 'https://qa-practical.qa.swimlane.io/api/user/login',
-        body: {
-            username: "rosvin.piedra",
-            password: "sebKAz9A8CRrDTxs"
-        }
-      })
-      .as('loginResponse')
-      .then(response => {
-        Cypress.env('token', response.body.token); // either this or some global var but remember that this will only work in one test case
-      })
-      .its('status')
-      .should('eq', 200);
-  })
+//Generate Random
+Cypress.Commands.add('generateRandom', (length) => {
 
+    var result           = 'a8n9tXkdr7XYdmEe'
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    var charactersLength = characters.length
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   cy.log(result)
+   return cy.wrap(result) 
+   
+})
 
 //
 //

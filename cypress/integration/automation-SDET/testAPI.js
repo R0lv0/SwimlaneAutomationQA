@@ -1,9 +1,17 @@
 /// <reference types="Cypress" />
 
 describe('testing token', () => {
-    beforeEach(() => {
-    });
+    before(function(){
+
+        //runs once before all test in the block
+        cy.fixture('loginCredentials').then(function(Ldata)
+        {
+            this.Ldata=Ldata
+        })
+
+    })
   
+    //API Login
     it('test login API', () => {
       cy.request({
         method:'POST', 
@@ -22,11 +30,15 @@ describe('testing token', () => {
       .should('eq', 200);
   })
   
+    //API Create
     it('test create record API', () => {
       const token = Cypress.env('token');
       const appID = Cypress.env('appID');
       const authorization = `Bearer ${ token }`;
       cy.log('Token is ' + token);
+      cy.generateRandom(3).then(bodyId => {
+        cy.log(bodyId)
+      })
       //cy.log('AppID is ' + appID)
       const createRecord = {
         method: 'POST',
@@ -77,7 +89,8 @@ describe('testing token', () => {
           "timeTrackingEnabled": true,
           "isHangfireCreatedAndUnpersisted": false,
           "infiniteLoopFlag": false,
-          "id": "a8n9tXkdr7XYdmEerqu", //cambiar este id por random
+          //"id": bodyId,
+          "id": "a8n9tXkdr7XYdmEerri", //cambiar este id por random
           "disabled": false,
           "readOnly": false,
           "coeditSession": {
@@ -102,6 +115,7 @@ describe('testing token', () => {
         .should('eq', 200);
     })
   
+    //API Get
     it('test get record API', () => {
       const token = Cypress.env('token');
       const appID = Cypress.env('appID');
@@ -121,5 +135,26 @@ describe('testing token', () => {
         .its('status')
         .should('eq', 200);
     })
+
+    //API Delete
+    it('test delete record API', () => {
+        const token = Cypress.env('token');
+        const appID = Cypress.env('appID');
+        const recordID = Cypress.env('recordID');
+        const authorization = `bearer ${ token }`;
+        cy.log('Token is ' + token)
+        cy.log('Application ID is ' + appID)
+        cy.log('Record ID is ' + recordID)
+        const options = {
+          method: 'DELETE',
+          url: `https://qa-practical.qa.swimlane.io/api/app/${appID}/record/${recordID}`,
+          headers: {
+            authorization,
+          }};
+    
+        cy.request(options)
+          .its('status')
+          .should('eq', 204);
+      })
   
   });
