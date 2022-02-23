@@ -4,10 +4,10 @@ describe('testing token', () => {
     before(function(){
 
         //runs once before all test in the block
-        cy.fixture('loginCredentials').then(function(Ldata)
+        /*cy.fixture('loginCredentials').then(function(Ldata)
         {
             this.Ldata=Ldata
-        })
+        })*/
 
     })
   
@@ -36,10 +36,9 @@ describe('testing token', () => {
       const appID = Cypress.env('appID');
       const authorization = `Bearer ${ token }`;
       cy.log('Token is ' + token);
-      cy.generateRandom(3).then(bodyId => {
+      /*cy.generateRandom(3).then(bodyId => {
         cy.log(bodyId)
-      })
-      //cy.log('AppID is ' + appID)
+      })*/
       const createRecord = {
         method: 'POST',
         url: `https://qa-practical.qa.swimlane.io/api/app/${appID}/record`,
@@ -105,7 +104,7 @@ describe('testing token', () => {
           }
       }
       };
-  
+    //Validate the status
       cy.request(createRecord)
         .as('createRecord')
         .then(response => {
@@ -131,6 +130,7 @@ describe('testing token', () => {
           authorization,
         }};
   
+    //Validate the status
       cy.request(options)
         .its('status')
         .should('eq', 200);
@@ -151,7 +151,8 @@ describe('testing token', () => {
           headers: {
             authorization,
           }};
-    
+
+    //Validate the status
         cy.request(options)
           .its('status')
           .should('eq', 204);
