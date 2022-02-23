@@ -2,34 +2,35 @@
 
 describe('testing token', () => {
     beforeEach(() => {
-      //cy.getToken;
     });
-      
-    it('test get record', () => {
-        const token = Cypress.env('token');
-        const authorization = `bearer ${ token }`;
-        cy.log('Token is ' + token)
-        const options = {
-          method: 'GET',
-          url: `https://qa-practical.qa.swimlane.io:443/api/app/aF5sqnNFCc36kO9_J/record/a8n9tXkdr7XYdmEered`,
-          headers: {
-            authorization,
-          }};
-    
-        cy.request(options)
-          .its('status')
-          .should('eq', 200);
+  
+    it('test login API', () => {
+      cy.request({
+        method:'POST', 
+        url: 'https://qa-practical.qa.swimlane.io/api/user/login',
+        body: {
+            username: "rosvin.piedra",
+            password: "sebKAz9A8CRrDTxs"
+        }
       })
-
-    it('test create record', () => {
+      .as('loginResponse')
+      .then(response => {
+        Cypress.env('token', response.body.token);
+        Cypress.env('appID', response.body.permission.aF5sqnNFCc36kO9_J.id)
+      })
+      .its('status')
+      .should('eq', 200);
+  })
+  
+    it('test create record API', () => {
       const token = Cypress.env('token');
-      //const appID = Cypress.env('appID');
+      const appID = Cypress.env('appID');
       const authorization = `Bearer ${ token }`;
       cy.log('Token is ' + token);
       //cy.log('AppID is ' + appID)
       const createRecord = {
         method: 'POST',
-        url: `https://qa-practical.qa.swimlane.io/api/app/aF5sqnNFCc36kO9_J/record`,
+        url: `https://qa-practical.qa.swimlane.io/api/app/${appID}/record`,
         headers: {
           authorization,
         },
@@ -76,7 +77,7 @@ describe('testing token', () => {
           "timeTrackingEnabled": true,
           "isHangfireCreatedAndUnpersisted": false,
           "infiniteLoopFlag": false,
-          "id": "a8n9tXkdr7XYdmEeryh",
+          "id": "a8n9tXkdr7XYdmEerqu", //cambiar este id por random
           "disabled": false,
           "readOnly": false,
           "coeditSession": {
@@ -93,7 +94,32 @@ describe('testing token', () => {
       };
   
       cy.request(createRecord)
+        .as('createRecord')
+        .then(response => {
+          Cypress.env('recordID', response.body.id);
+        })
         .its('status')
         .should('eq', 200);
     })
+  
+    it('test get record API', () => {
+      const token = Cypress.env('token');
+      const appID = Cypress.env('appID');
+      const recordID = Cypress.env('recordID');
+      const authorization = `bearer ${ token }`;
+      cy.log('Token is ' + token)
+      cy.log('Application ID is ' + appID)
+      cy.log('Record ID is ' + recordID)
+      const options = {
+        method: 'GET',
+        url: `https://qa-practical.qa.swimlane.io:443/api/app/${appID}/record/${recordID}`,
+        headers: {
+          authorization,
+        }};
+  
+      cy.request(options)
+        .its('status')
+        .should('eq', 200);
+    })
+  
   });
