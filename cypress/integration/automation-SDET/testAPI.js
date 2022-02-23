@@ -89,8 +89,8 @@ describe('testing token', () => {
           "timeTrackingEnabled": true,
           "isHangfireCreatedAndUnpersisted": false,
           "infiniteLoopFlag": false,
-          //"id": bodyId,
-          "id": "a8n9tXkdr7XYdmEerri", //cambiar este id por random
+          //change this value for random
+          "id": "a8n9tXkdr7XYdmEerri", 
           "disabled": false,
           "readOnly": false,
           "coeditSession": {

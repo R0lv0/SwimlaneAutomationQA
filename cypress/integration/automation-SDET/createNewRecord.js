@@ -60,8 +60,11 @@ describe('Create New Record Feature Test Suite', function()
         cy.get('.ng-notification').should('be.visible')
         //cy.get('.ng-notification').contains()
 
+        //Vlaidate the record is created 
+        cy.get('.record-header-link').should('be.visible')
+
         //Delete the record
-        cy.deleteRecord()
+        //cy.deleteRecord()
 
         })
 
