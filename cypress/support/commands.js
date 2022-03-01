@@ -74,20 +74,6 @@ Cypress.Commands.add('deleteRecord', () => {
 
 })
 
-//Generate Random
-Cypress.Commands.add('generateRandom', (length) => {
-
-    var result           = 'a8n9tXkdr7XYdmEe'
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    var charactersLength = characters.length
-    for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-   }
-   cy.log(result)
-   return cy.wrap(result) 
-   
-})
-
 //
 //
 // -- This is a child command --
@@ -100,5 +86,3 @@ Cypress.Commands.add('generateRandom', (length) => {
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-
-
