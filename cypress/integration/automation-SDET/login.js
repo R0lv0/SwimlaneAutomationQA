@@ -1,19 +1,17 @@
 /// <reference types="Cypress" />
 
-describe('Login Feature Test Suite', function()
-{
+describe('Login Feature Test Suite', function () {
 
-    before(function(){
+    before(function () {
 
         //runs once before all test in the block
-        cy.fixture('loginCredentials').then(function(Ldata)
-        {
-            this.Ldata=Ldata
+        cy.fixture('loginCredentials').then(function (Ldata) {
+            this.Ldata = Ldata
         })
 
     })
 
-    it('login',function() {
+    it('login', function () {
 
         //go to the ULR
         cy.visit('https://qa-practical.qa.swimlane.io/login')
@@ -23,7 +21,7 @@ describe('Login Feature Test Suite', function()
         cy.get('#input-1').type(this.Ldata.userName)
         cy.get('#input-2').should('be.visible')
         cy.get('#input-2').type(this.Ldata.password)
-        
+
         //Click on the login button 
         cy.wait(1000)
         cy.get('[data-cy="submit__btn"]').should('be.visible')
@@ -33,7 +31,7 @@ describe('Login Feature Test Suite', function()
         cy.get('[data-cy="action__btn"]').should('be.visible')
     })
 
-    it('loginFailed',function() {
+    it('loginFailed', function () {
 
         //go to the ULR
         cy.visit('https://qa-practical.qa.swimlane.io/login')
@@ -43,7 +41,7 @@ describe('Login Feature Test Suite', function()
         cy.get('#input-1').type('badName')
         cy.get('#input-2').should('be.visible')
         cy.get('#input-2').type('badPassword')
-        
+
         //Click on the login button 
         cy.wait(1000)
         cy.get('[data-cy="submit__btn"]').should('be.visible')
@@ -71,4 +69,4 @@ describe('Login Feature Test Suite', function()
         cy.login(this.Ldata.userName, this.Ldata.password) 
     })*/
 
-} )
+})
